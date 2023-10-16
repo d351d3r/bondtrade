@@ -7,4 +7,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    command: /bin/sh -c "conan install .. --build=missing && cmake .. && make"
+    command: /bin/sh -c "conan install .. && cmake .. && make"
