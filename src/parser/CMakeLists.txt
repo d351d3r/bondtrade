@@ -8,15 +8,12 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Включите поддержку Conan
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
-
 # Создайте список исходных файлов для вашего подпроекта
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 # Создайте исполняемый файл
-add_executable(moex_parser ${SOURCES})
+add_executable(moex_parser ${SOURCES}
+        "hpp/MicexISSClient.hpp ")
 
 # Укажите директории заголовочных файлов для вашего подпроекта
 target_include_directories(moex_parser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/hpp)
@@ -25,6 +22,8 @@ target_include_directories(moex_parser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/hpp)
 # Conan автоматически загрузит их, поэтому вы можете использовать их через цели Conan
 # Например:
 # target_link_libraries(moex_parser PRIVATE CONAN_PKG::libcurl)
+target_link_libraries(moex_parser PRIVATE CONAN_PKG::libcurl)
+target_link_libraries(moex_parser PRIVATE CONAN_PKG::nlohmann_json)
 
 # Если у вас есть другие зависимости, укажите их вот так:
 # target_link_libraries(moex_parser PRIVATE CONAN_PKG::library_name)

@@ -15,7 +15,7 @@ size_t MicexAuth::WriteCallback(void* contents, size_t size, size_t nmemb, void*
     return size * nmemb;
 }
 
-size_t header_callback(char* buffer, size_t size, size_t nitems, void* userdata) {
+size_t HeaderCallback(char* buffer, size_t size, size_t nitems, void* userdata) {
     std::string header(buffer, size * nitems);
     if (header.find("Set-Cookie: MicexPassportCert=") != std::string::npos) {
         std::string cookie = header.substr(header.find('=') + 1);
@@ -43,7 +43,7 @@ void MicexAuth::auth() {
 
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, HeaderCallback);
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, &passport);
 
         res = curl_easy_perform(curl);
