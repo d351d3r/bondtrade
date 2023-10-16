@@ -1,0 +1,17 @@
+#pragma once
+#include "Config.hpp"
+#include "MicexAuth.hpp"
+#include "MicexISSDataHandler.hpp"
+
+class MicexISSClient {
+public:
+    MicexISSClient(Config& config, MicexAuth& auth, MicexISSDataHandler& handler);
+    bool get_history_securities(const std::string& engine, const std::string& market,
+                                const std::string& board, const std::string& date);
+    MicexISSDataHandler* get_data_handler();
+
+private:
+    Config& config;
+    MicexAuth& auth;
+    MicexISSDataHandler& handler;
+};
